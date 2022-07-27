@@ -1,0 +1,234 @@
+algoritmo Cadatramento_Bancario;
+// Síntese
+//  Objetivo:  Cadastrar Usúarios em um algoritmo bancario.
+//  Entrada :	Dados do usúario para o cadastro e opções para navegar pelo algoritmo.
+//  Saída   :	Nome dos Usúarios Cadastrados.
+
+
+principal
+	// Declarações
+
+	// Instruções
+	//Inicio
+	escreval("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+	escreval("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+	escreval("--------*Seja Bem-Vindo ao Serviço de Gerenciamento Bancário*------------------");
+	escreval("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+	escreval("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+	escreval("");
+	//Menu
+	menuPrincipal();
+	
+
+fimPrincipal
+//************************************************************************************************************************************************************************************
+//Procedimento que mostra o menu e direciona para os tipos de cadastro
+procedimento menuPrincipal()
+inteiro opcao, opcaoConta,tipoCad, quantidade_cad;
+
+
+
+escreval("Digite a Opção de Serviço Desejada!");
+	escreval("");
+	escreval("1 - Cadastrar Novo Usuário");
+	escreval("2 - Sair"); 
+
+	leia(opcao);
+	
+	escreval("");
+	//Condições Menu
+	enquanto(opcao > 2 ou opcao < 1)faca
+		escreval("Opção inexistente digite outra");
+		leia(opcao);
+	fimEnquanto
+
+	se(opcao == 1)entao
+		tipoCad = novoCadastro();
+		escreval("Digite Quantos cadastros deseja fazer?");
+		leia(quantidade_cad);
+		Conta_Corrente(tipoCad, quantidade_cad);
+		Conta_Poupanca(tipoCad, quantidade_cad);
+	fimSe
+
+	se(opcao == 2)entao
+		limpaTela();
+	fimSe				
+fimProcedimento	
+
+
+//************************************************************************************************************************************************************************************
+//função que retorna um numero inteiro com o tipo de cadastro desejado
+funcao inteiro novoCadastro()
+	//declarações
+	inteiro tipo_conta;
+	
+	//Instruções
+	escreval("++++ Bem vindo a tela de Cadastro ++++");
+	escreval("");
+	escreval("Primeiramente escolha o tipo de conta que deseja criar!");
+	escreval("Digite a opção desejada");
+	escreval("");
+	escreval("1 - Conta-Corrente");
+	escreval("2 - Conta-Poupança");
+
+	leia(tipo_conta);
+
+	se(tipo_conta > 2 ou tipo_conta < 1)entao
+		escreval("Valor Invalido tente novamente");
+		escreval("Digite a opção desejada");
+		escreval("");
+		escreval("1 - Conta-Corrente");
+		escreval("2 - Conta-Poupança");
+		leia(tipo_conta);
+	fimSe	
+
+	retorna tipo_conta;
+	
+fimFuncao
+
+//********************************************************************************************************************************************************************************************
+
+//Procedimento de cadastro da Conta corrente que possibilita visualizar também os cadastros feitos
+procedimento Conta_Corrente (inteiro tipo_conta, inteiro quantidade_cad)
+	texto nome[10], contaC[10], digitoC[10], cpf[10], CadastroC[10];
+	inteiro  novamente, i, verCad, voltaMenu;
+	novamente = 0;
+	
+	para(i de 0 ate quantidade_cad -1 passo 1)faca
+		se(tipo_conta == 1 )entao
+			escreval("****Cadastro de Conta-Corrente Iniciado****");
+			escreval("");
+			escreval("Digite seu nome completo");
+			leia(nome[i]);
+			escreval("Digite seu CPF sem separação (11 digitos)");
+			leia(cpf[i]);
+				enquanto(tamanhoTexto(cpf[i]) != 11)faca
+					escreval("Quantidade de número incorreta, Tente novamente!");
+					leia(cpf[i]);
+				fimEnquanto	
+			escreval("Escolha um número para sua Conta-Corrente (5 digitos)");
+			leia(contaC[i]);
+				enquanto(tamanhoTexto(contaC[i]) > 5 ou tamanhoTexto(contaC[i]) < 5)faca
+					escreval("Você colocou uma quantidade errada de números");
+					escreval("Tente Novamente");
+					leia(contaC[i]);
+				fimEnquanto	
+			escreval("Digite um digito para complementar seu número de conta");
+			leia(digitoC[i]);
+				enquanto(tamanhoTexto(digitoC[i]) != 1)faca
+					escreval("O digito é apenas um número");
+					escreval("Tente Novamente");
+					leia(digitoC[i]);
+				fimEnquanto		
+			CadastroC[i] = ("Nome: " + nome[i] + " " + "CPF: " + cpf[i] + " " + "Conta: " + contaC[i] + "-" + digitoC[i]);
+			escreval("Conta Cadastrada com Sucesso");
+				escreval("");
+				
+			
+		fimSe
+	fimPara	
+	//Condição que pergunta se deseja ver os usuarios cadastrados
+	se(tipo_conta == 1)entao
+		escreval("Deseja ver os Cadastros ?");
+		escreval("Digite 1 para sim");
+		escreval("Digite 2 para não");
+		leia(verCad);
+		se(verCad == 1)entao
+			para(i de 0 ate quantidade_cad -1 passo 1)faca
+				escreval(CadastroC[i]);
+			fimPara
+		fimSe	
+		//condição para voltar ao menu e continuar usando o algoritmo	
+		escreval("");
+		escreval("Deseja voltar ao menu?");
+		escreval("Digite 1 para sim");
+		escreval("Digite 2 para não");
+		leia(voltaMenu);
+		se(voltaMenu == 1)entao
+		escreval("");
+		escreval ("Redirecionando ao menu");
+		menuPrincipal();
+		fimSe
+	fimSe
+
+fimProcedimento
+
+//*************************************************************************************************************************************************************************************************
+
+//Procedimento de cadastro da Conta Poupança que possibilita visualizar também os cadastros feitos
+procedimento Conta_Poupanca(inteiro tipo_conta, inteiro quantidade_cad)
+	
+	texto nome[10], contaP[10], digitoP[10],cpf[10], CadastroP[10];
+	inteiro novamente, i, verCad, voltaMenu;
+	novamente = 0;
+
+	para(i de 0 ate quantidade_cad - 1 passo 1)faca
+		se(tipo_conta == 2 )entao
+			escreval("****Cadastro de Conta-Poupança Iniciado****");
+			escreval("");
+			escreval("Digite seu nome completo");
+			leia(nome[i]);
+			escreval("Digite seu CPF sem separação (11 digitos)");
+			leia(cpf[i]);
+				enquanto(tamanhoTexto(cpf[i]) != 11)faca
+					escreval("Quantidade de número incorreta, Tente novamente!");
+					leia(cpf[i]);
+				fimEnquanto	
+			escreval("Escolha um número para sua Conta-Poupança (5 digitos)");
+			leia(contaP[i]);
+				enquanto(tamanhoTexto(contaP[i]) > 5 ou tamanhoTexto(contaP[i]) < 5)faca
+					escreval("Você colocou uma quantidade errada de números");
+					escreval("Tente Novamente");
+					leia(contaP[i]);
+				fimEnquanto	
+			escreval("Digite um digito para complementar seu número de conta");
+			leia(digitoP[i]);
+				enquanto(tamanhoTexto(digitoP[i]) != 1)faca
+					escreval("O digito é apenas um número");
+					escreval("Tente Novamente");
+					leia(digitoP[i]);
+				fimEnquanto		
+			CadastroP[i] = ("Nome: " + nome[i] + " " + "CPF: " + cpf[i] + " " + "Conta: " + contaP[i] + "-" + digitoP[i]);
+			escreval("Conta Cadastrada com Sucesso");
+			escreval("");
+				
+		fimSe	
+	fimPara
+	//condição para voltar ao menu e continuar usando o algoritmo	
+	se(tipo_conta == 2)entao
+		escreval("Deseja ver os Cadastros ?");
+		escreval("Digite 1 para sim");
+		escreval("Digite 2 para não");
+		leia(verCad);
+		se(verCad == 1)entao
+			para(i de 0 ate quantidade_cad -1 passo 1)faca
+				escreval(CadastroP[i]);
+			fimPara
+		fimSe		
+		escreval("");
+		escreval("Deseja voltar ao menu?");
+		escreval("Digite 1 para sim");
+		escreval("Digite 2 para não");
+		leia(voltaMenu);
+		se(voltaMenu == 1)entao
+		escreval("");
+		escreval ("Redirecionando ao menu");
+		menuPrincipal();
+		fimSe
+	fimSe
+
+	
+fimProcedimento
+
+//*********************************************************************************************************************************************************************************************
+
+
+
+
+
+
+
+
+	
+
+
